@@ -5,12 +5,18 @@ var X;
 var Y;
 X=0;
 Y=0;
+var R = 255;
+var G = 0;
+var B = 0;
+var AUX;
+var W = 3;
 
 
 
 function draw() {
-	fill(0);
-	ellipse(X, Y, 3, 3);
+	fill(R,G,B);
+	strokeWeight(0);
+	ellipse(X, Y, W, W);
 }
 
 
@@ -31,9 +37,23 @@ function searchDevice(){
 	microBit.searchDevice();
 }
 
+microBit.setButtonBCallback(function(){
+	AUX = R;
+	R = G;
+	G = B;
+	B = AUX;
+	}
+);
+
+microBit.setButtonACallback(function(){
+	if (W<30) {
+		W = W + 3;
+	} else {
+		W = 3;
+	}
+});
+
 microBit.onBleNotify(function(){
 	X= X + microBit.getAccelerometer().x / 1024;
 	Y= Y + microBit.getAccelerometer().y / 1024;
-	if (microBit.getButtonA()) {
-	}
 })
